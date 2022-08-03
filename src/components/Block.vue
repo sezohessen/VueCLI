@@ -19,7 +19,7 @@ export default {
         console.log('Component Mounted')
         setTimeout(()=>{
             this.showBlock = true
-            console.log(this.delay)
+            this.startTime()
         },this.delay)//Wait until delay
     },
     updated() {
@@ -36,6 +36,7 @@ export default {
         },
         stopTimer(){
             clearInterval(this.timer)
+            this.$emit('end',this.reactionTime)
         }
     },
 }

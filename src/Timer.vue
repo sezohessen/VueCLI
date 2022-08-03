@@ -2,7 +2,8 @@
   <div style="margin:20px;height:500px">
     <h1>Sezo Reaction Time</h1>
     <button @click="Start" :disabled="isPlaying">Play</button>
-    <Block v-if="isPlaying" :delay="delay"/>
+    <Block v-if="isPlaying" :delay="delay" @end="endGame"/>
+    <p v-if="showResults">Reaction Time:  {{ score }} ms</p>
   </div>
 </template>
 
@@ -14,13 +15,21 @@ export default {
   data() {
     return {
       isPlaying:false,
-      delay:null
+      delay:null,
+      score:null,
+      showResults:false
     }
   },
   methods: {
     Start(){
       this.delay = 2000 + Math.random() * 5000//2~7
       this.isPlaying = true
+      this.showResults = false
+    },
+    endGame(reactionTime){
+      this.score = reactionTime
+      this.isPlaying = false
+      this.showResults = true
     }
   },
 }
