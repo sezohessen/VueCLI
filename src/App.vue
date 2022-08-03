@@ -3,7 +3,9 @@
   <input type="text" ref="name">
   <button @click="handleClick"> Click Me</button>
   <hr>
-  <Modal :header="header" text="This is dark theme" :age="age" theme="Dark"/>
+  <button @click="ToggleModal">Open Modal</button>
+  <Modal :header="header" text="This is dark theme"
+   :age="age" theme="Dark" :ShowModal="ShowModal" @close="ToggleModal"/>
   <hr>
   <Modal :header="header" text="This div not using theme" :age="age" />
 </template>
@@ -23,6 +25,7 @@ export default {
     return {
       title:'Welcome Sezo',
       header:'Hello From Root',
+      ShowModal:false,
       age:23
     }
   },
@@ -30,6 +33,9 @@ export default {
     handleClick(){
       console.log(this.$refs.name)
       this.$refs.name.classList.add('active')
+    },
+    ToggleModal(){
+      this.ShowModal =!this.ShowModal
     }
   },
 }
