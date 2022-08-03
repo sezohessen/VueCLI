@@ -4,6 +4,8 @@
   <button @click="handleClick"> Click Me</button>
   <hr>
   <button @click="ToggleModal">Open Modal</button>
+
+  <p><button @click.right="ToggleModal">Open Modal (right click)</button></p>
   <Modal :header="header" text="This is dark theme"
    :age="age" theme="Dark" :ShowModal="ShowModal" @close="ToggleModal"/>
   <hr>

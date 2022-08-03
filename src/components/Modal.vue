@@ -1,12 +1,12 @@
 <template>
-    <div class="backdrop" @click="closeModal">
-        <div class="card" v-if="ShowModal">
+    <div class="backdrop">
+        <div class="card" v-if="ShowModal" @click.self="closeModal">
+        <!-- Click.self : click on this element itself and only this element not any element inside it -->
             <div class="card-header">
                 <h1>Welcome Hussien This is Vue3 Tutorial</h1>
                 <p>I hope you are doing great</p>
             </div>
         </div>
-        <hr>
         <div class="modal" :class="{theme_dark: theme==='Dark'}">
             <h1>{{ header ? header: 'Not Found Title' }}</h1>
             <p>{{ text }}</p>
@@ -28,9 +28,14 @@ export default {/* Get Data from parent component */
     methods: {
         ChangeTheme(){
             this.theme = 'Dark'//Usual Way
+            /* Not recommended */
         },
         closeModal(){
             this.$emit('close')//Emit way
+            /* 
+            Its efficent to edit the value from parent class instead of rewrite it in child class
+            Because if the page is rendering , the child class will take it's values from parent.
+            */
         }
     },
 }
