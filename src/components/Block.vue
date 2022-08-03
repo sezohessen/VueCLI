@@ -1,5 +1,5 @@
 <template>
-  <div class="block" v-if="showBlock">
+  <div class="block" v-if="showBlock" @click="stopTimer">
       Click Me
   </div>
 </template>
@@ -10,6 +10,8 @@ export default {
     data() {
         return {
             showBlock:false,
+            timer:null,
+            reactionTime:0
         }
     },
     /* Vue Life Cycle Hooks */
@@ -18,13 +20,23 @@ export default {
         setTimeout(()=>{
             this.showBlock = true
             console.log(this.delay)
-        },this.delay)
+        },this.delay)//Wait until delay
     },
     updated() {
         console.log('Component updated')
     },
     unmounted() {/* When using vue routing from page to page, the component will unmounted when we navigate from page */
         console.log('Component unmounted')
+    },
+    methods: {
+        startTime(){
+            this.timer = setInterval(()=>{
+                this.reactionTime +=10
+            },10)
+        },
+        stopTimer(){
+            clearInterval(this.timer)
+        }
     },
 }
 </script>
