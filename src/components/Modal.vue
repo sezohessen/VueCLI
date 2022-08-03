@@ -3,8 +3,12 @@
         <div class="card" v-if="ShowModal" @click.self="closeModal">
         <!-- Click.self : click on this element itself and only this element not any element inside it -->
             <div class="card-header">
-                <h1>Welcome Hussien This is Vue3 Tutorial</h1>
-                <p>I hope you are doing great</p>
+                <slot>Default content</slot>
+                <!-- Default content will appear iff there is no content in parent -->
+                <!-- Slots useful for passing custom template into components -->
+                <div class="links">
+                    <slot name="links"></slot>
+                </div>
             </div>
         </div>
         <div class="modal" :class="{theme_dark: theme==='Dark'}">
