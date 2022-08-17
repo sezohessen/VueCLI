@@ -1,11 +1,12 @@
 <template>
-  <form>
+  <form @submit.prevent="handleSubmit">
       <label>Email:</label>
       <input type="email" name="" id="" required v-model="email" >
       <label>Password:</label>
       <input type="password" name="" id="" required v-model="password">
+      <div v-if="passwordError" class="error">{{passwordError}}</div>
       <label >Role:</label>
-      <select v-model="role">
+      <select v-model="role" required>
           <option value="developer">Web Developer</option>
           <option value="designer">Web Designer</option>
       </select>
@@ -13,10 +14,13 @@
           <input type="checkbox" required v-model="terms">
           <label>Accept terms and conditions</label>
       </div>
-      <label>Skills: <span>(Press enter to add skill)</span> </label>
+      <label>Skills: <span>(Press , to add skill)</span> </label>
       <input type="text"  v-model="tempSkill" @keyup="addSkill">
       <div v-for="skill in skills" :key="skill" class="pill">
         <span @click="deleteSkill(skill)">{{ skill }}</span>
+      </div>
+      <div class="submit">
+          <button>Create Account</button>
       </div>
       <!-- 
         V-model tracking the value of attribute and update it to the input
@@ -40,14 +44,18 @@ export default {
             role:'',
             terms:false,
             tempSkill:'',
-            skills:[]
+            skills:[],
+            passwordError:''
         }
     },
     methods: {
         addSkill(e){
-            if((e.key === 'Enter')&& this.tempSkill){
-                if(!this.skills.includes(this.tempSkill)){
-                    this.skills.push(this.tempSkill)
+            if((e.key === ',')){
+                this.tempSkill = this.tempSkill.slice(0, -1);
+                if(this.tempSkill){
+                    if(!this.skills.includes(this.tempSkill)){
+                        this.skills.push(this.tempSkill)
+                    }
                 }
                 this.tempSkill = ''
             }
@@ -61,6 +69,11 @@ export default {
             if it return true for an item in array then we keep it in the array if we return false
             we remove it from array 
              */
+        },
+        handleSubmit(){
+            //Validate Password
+            this.passwordError = this.password.length > 5 ? '' :'Password Must be at least 6 chars long'
+
         }
     },
 }
@@ -111,5 +124,22 @@ input[type="checkbox"]{
     font-weight: bold;
     color: #777;
     cursor: pointer;
+}
+button {
+    background: #0b6dff;
+    border: 0;
+    padding: 10px 20px;
+    margin-top: 20px;
+    color: white;
+    border-radius: 20px;
+  }
+.submit {
+    text-align: center;
+}
+.error {
+    color: #ff0062;
+    margin-top: 10px;
+    font-size: 0.8em;
+    font-weight: bold;
 }
 </style>
